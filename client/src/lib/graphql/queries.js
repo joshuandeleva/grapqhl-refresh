@@ -1,5 +1,19 @@
 import { ApolloLink, createHttpLink, gql } from '@apollo/client';
 
+const jobDetailsFragment = gql`
+  fragment JobDetails on Job {
+    id
+    title
+    description
+    date
+    company {
+      id
+      name
+      description
+    }
+  }
+`;
+
 export const GET_JOBS = gql`
   query GetJobs {
     jobs {
@@ -18,16 +32,10 @@ export const GET_JOBS = gql`
 export const GET_JOB = gql`
   query GetJob($id: ID!) {
     job(id: $id) {
-      id
-      title
-      date
-      company {
-        id
-        name
-        description
-      }
+      ...JobDetails
     }
   }
+  ${jobDetailsFragment}
 `;
 
 export const GET_COMPANY = gql`
@@ -48,16 +56,10 @@ export const GET_COMPANY = gql`
 export const CREATE_JOB = gql`
   mutation CreateJob($input: CreateJobInput!) {
     createJob(input: $input) {
-      id
-      title
-      description
-      date
-      company {
-        id
-        name
-      }
+      ...JobDetails
     }
   }
+  ${jobDetailsFragment}
 `;
 
 const customHttpLink = createHttpLink({uri: '/graphql'}); 
