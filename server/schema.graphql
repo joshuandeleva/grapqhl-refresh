@@ -1,0 +1,39 @@
+type Query {
+  jobs: [Job]
+  job(id: ID!): Job
+  companies: [Company]
+  company(id: ID!): Company
+}
+type Mutation {
+    createJob(input:CreateJobInput): Job
+    updateJob(input:UpdateJobInput): Job
+    deleteJob(id: ID!): Job
+}
+"""
+Represents a job listing in the job board system.
+"""
+type Job {
+  id: ID!
+  title: String!
+  description: String!
+  """ This is a __date__ in ISO 8601 format E.g `2022-12-31` """
+  date: String!
+  company: Company!
+}
+
+type Company {
+  id: ID!
+  name: String!
+  description: String
+  jobs: [Job]
+}
+input CreateJobInput {
+  title: String!
+  description: String!
+}
+
+input UpdateJobInput {
+  title: String
+  description: String
+  id: ID!
+}

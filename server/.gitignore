@@ -1,0 +1,14 @@
+/node_modules/
+# Ignore node_modules directory
+/node_modules/
+
+.env
+# Ignore environment variable files
+
+/client/build
+/client/node_modules
+
+
+/server/.env
+/server/node_modules
+
