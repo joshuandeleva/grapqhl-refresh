@@ -1,5 +1,5 @@
 type Query {
-  jobs(limit:Int , offset:Int): [Job]
+  jobs(limit:Int , offset:Int): JobList
   job(id: ID!): Job
   companies: [Company]
   company(id: ID!): Company
@@ -8,6 +8,10 @@ type Mutation {
     createJob(input:CreateJobInput): Job
     updateJob(input:UpdateJobInput): Job
     deleteJob(id: ID!): Job
+}
+type JobList {
+  items: [Job!]!
+  totalCount: Int!
 }
 """
 Represents a job listing in the job board system.

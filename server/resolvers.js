@@ -1,6 +1,6 @@
 import { companies } from "../client/src/lib/fake-data.js";
 import { getCompany } from "./db/companies.js";
-import { createJob, deleteJob, getJobs, getJobsByCompany, updateJob } from "./db/jobs.js";
+import { createJob, deleteJob, getJobCount, getJobs, getJobsByCompany, updateJob } from "./db/jobs.js";
 import { GraphQLError } from "graphql";
 
 export const resolvers = {
@@ -8,7 +8,8 @@ export const resolvers = {
         jobs: async (parent , args , contextvalue , info) => {
             const { limit , offset } = args;
             const jobs = await getJobs(limit , offset);
-            return jobs;
+            const count = await getJobCount();
+            return {items: jobs, totalCount: count};
         },
         job: async (_, { id }) => {
             const jobs = await getJobs();
