@@ -7,3 +7,10 @@ export const connection = knex({
   },
   useNullAsDefault: true,
 });
+
+// check queries running (n + 1 problem)
+
+connection.on('query', ({sql , bindings}) => {
+  const query = connection.raw(sql, bindings).toQuery();
+  console.log(`Running query: ${query}`);
+});

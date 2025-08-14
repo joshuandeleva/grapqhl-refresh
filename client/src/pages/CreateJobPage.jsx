@@ -78,7 +78,7 @@ function CreateJobPage() {
           </div>
           <div className="field">
             <div className="control">
-              <button type='submit' className="button is-link">
+              <button disabled={loading} type='submit' className="button is-link">
                 Submit
               </button>
             </div>
