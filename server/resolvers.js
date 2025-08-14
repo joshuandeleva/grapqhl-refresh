@@ -5,8 +5,9 @@ import { GraphQLError } from "graphql";
 
 export const resolvers = {
     Query: {
-        jobs: async () => {
-            const jobs = await getJobs();
+        jobs: async (parent , args , contextvalue , info) => {
+            const { limit , offset } = args;
+            const jobs = await getJobs(limit , offset);
             return jobs;
         },
         job: async (_, { id }) => {
@@ -64,7 +65,10 @@ export const resolvers = {
     },
     Job: {
         date: (job) => formatDate(job.createdAt),
-        company: (job) => getCompany(job.companyId)
+        company: (job ,  _args , contextValue , info) => {
+            const { companyLoader } = contextValue
+            return companyLoader.load(job.companyId)
+        }
     },
     Company: {
         jobs: async (company) => {
